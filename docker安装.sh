@@ -20,4 +20,8 @@ sudo yum install -y docker-ce docker-ce-cli containerd.io
 curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://f1361db2.m.daocloud.io
 systemctl enable docker.service && sudo systemctl start docker
 
+yum -y install epel-release \
+  python-pip
+
 pip install docker-compose
+pip install --upgrade pip
