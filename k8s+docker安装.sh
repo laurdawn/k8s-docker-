@@ -1,5 +1,13 @@
 #!/bin/bash
 
+#配置阿里yum源
+yum install -y epel-release
+yum install -y wget
+mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
+wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+yum clean all
+yum makecache 
+
 #docker安装
 sudo yum remove docker \
                   docker-client \
@@ -19,7 +27,9 @@ sudo yum install -y docker-ce docker-ce-cli containerd.io
 #添加加速器
 curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://f1361db2.m.daocloud.io
 systemctl enable docker.service && sudo systemctl start docker
-pip install docker-compose
+
+sudo curl -L https://github.com/docker/compose/releases/download/1.18.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
 
 #k8s安装
 cat <<EOF > /etc/yum.repos.d/kubernetes.repo
